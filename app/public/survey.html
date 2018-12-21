@@ -258,7 +258,7 @@
             </div>
         </div>
        
-       <button type="button" class="btn btn-primary btn-lg btn-block" id="addUser">Submit</button>     
+    <button type="button" class="btn btn-primary btn-lg btn-block" id="addUser">Submit</button>     
     </div>  
     
     <div class="modal fade" id="myModal" role="dialog">
@@ -266,16 +266,20 @@
     
       <!-- Modal content-->
       <div class="modal-content">
+      <h3 class="modal-title">Your Best Match</h3>
+      
+      <div class="modal-header">
        
         <div class="modal-body">
-          <p id="match"></p>
-          <img src="https://goo.gl/images/b2Z7es">
+         
+          
           
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" id="modalClose">Close</button>
         </div>
       </div>
+    </div>
     </div>
     </div>
       
@@ -283,7 +287,7 @@
        
     <footer class="footer">
       <div class="container">
-        <p><a href="/api/friends">API Friends List</a> | <a href="/api/waitlist">GitHub Repo</a>
+        <p><a href="/api/friends">API Friends List</a> | <a href="https://github.com/saranyamohandas/FriendFinder.git">GitHub Repo</a>
       </div>
     </footer>
     
@@ -292,9 +296,11 @@
 
 <script>
     console.log("log here..");
+    console.log($("#q1").val())
     var answered = true;
     var newUser = {}
     $("#addUser").click(function(event){
+        console.log($("#q1").val());
          event.preventDefault();
          if(!($("#inpName").val()) || !($("#img").val())) {
              alert("Please fill all required fields!"); 
@@ -309,7 +315,7 @@
            } 
         }
     
-      if(answered){
+    if(answered){
             newUser.name = $("#inpName").val().trim();
             newUser.photo = $("#img").val().trim();
             newUser.scores = []
@@ -319,39 +325,44 @@
                 console.log(parseInt($(getId).val()));
                 newUser.scores.push(parseInt($(getId).val().charAt(0)));  
                }
-        console.log(newUser);
+            console.log(newUser);
           
-      }
+      
   
     
     $.post("/api/friends", newUser,function(data) {
-
-        // If a table is available... tell user they are booked.
         console.log(data);
         if (data) {
-          alert("Your best match is " + data.name);
           var para = $("<p>");
           var image = $("<img>");
           para.text(data.name);
           image.attr("src",data.photo,"alt","Your match image");
+          image.css("width","25%");
          
           $(".modal-body").append(para,image);
           $('#myModal').modal('show');
           
-        }
-
-        // If a table is available... tell user they on the waiting list.
-        else {
-          alert("Sorry don't have a match");
+        } else {
+          var para = $("<p>");
+          para.text("Sorry we couldn't find a better match for you!");
+          $(".modal-body").append(para);
+          $('#myModal').modal('show');
+          
         }
 
         // Clear the form when submitting
         $("input").val("");
+        
+        $(".ques").val("Select an option");
 
       });
+      }
+    
           
     })
-   
+      $("#modalClose").on("click",function(){
+          $(".modal-body").empty();
+      })
     
 </script>
 </html>

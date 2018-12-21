@@ -17,31 +17,31 @@ var friendList = [
     {
     name: "Bo",
     photo : "assests/images/girl2.jpg",
-    scores : [5,
-      1,
-      4,
-      4,
+    scores : [3,
+      5,
       5,
       1,
+      1,
+      1,
+      3,
+      3,
       2,
-      5,
-      4,
       1
              ]
 },
     {
     name: "Kate",
     photo : "assests/images/longhair.png",
-    scores : [5,
-      1,
-      4,
+    scores : [1,
       4,
       5,
+      5,
       1,
+      5,
       2,
-      5,
+      2,
       4,
-      1
+      2
              ]
 }
 ];

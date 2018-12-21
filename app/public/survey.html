@@ -313,58 +313,37 @@
       if(answered){
             newUser.name = $("#inpName").val().trim();
             newUser.photo = $("#img").val().trim();
-            if(!(newUser.scores)){
-               newUser.scores = [];
-               } else {
-                   newUser.scores.push(parseInt(getId).val().charAt(0));
-               } 
-          }
-
-//       if(answered) {
-//           var newUser = {
-//                 name: $("#inpName").val().trim(),
-//                 photo : $("#img").val().trim(),
-//                 scores :[
-//                     parseInt($("#q1").val().charAt(0)),
-//                     parseInt($("#q2").val().charAt(0)),
-//                     parseInt($("#q3").val().charAt(0)),
-//                     parseInt($("#q4").val().charAt(0)),
-//                     parseInt($("#q5").val().charAt(0)),
-//                     parseInt($("#q6").val().charAt(0)),
-//                     parseInt($("#q7").val().charAt(0)),
-//                     parseInt($("#q8").val().charAt(0)),
-//                     parseInt($("#q9").val().charAt(0)),
-//                     parseInt($("#q10").val().charAt(0)),
-//                     
-//                 ]
-//                 
-//             };
-//        console.log(newUser)
-//           
-//       }
-        
+            newUser.scores = []
+            for(j=1;j<=10;j++){
+                var getId = "#q"+ j;
+                console.log(getId);
+                console.log(parseInt($(getId).val()));
+                newUser.scores.push(parseInt($(getId).val().charAt(0)));  
+               }
+        console.log(newUser);
+          
+      }
+  
     
-    $.post("/api/friends", newUser,
-      function(data) {
+    $.post("/api/friends", newUser,function(data) {
 
         // If a table is available... tell user they are booked.
+        console.log(data);
         if (data) {
-          alert("Yay! You are officially booked!");
+          alert("Your best match is " + data.name);
         }
 
         // If a table is available... tell user they on the waiting list.
         else {
-          alert("Sorry you are on the wait list");
+          alert("Sorry don't have a match");
         }
 
         // Clear the form when submitting
-       //$(".")
+        $("input").val("");
 
       });
           
-        
     })
-   
     
     
 </script>
